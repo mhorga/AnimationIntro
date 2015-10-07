@@ -10,16 +10,38 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var square: UIView!
+    var zoomed = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func tapped(sender: UITapGestureRecognizer) {
+        if zoomed {
+            UIView.animateWithDuration(0.3, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState], animations: {
+                let scaleTransform = CGAffineTransformIdentity
+                self.square.transform = scaleTransform
+                self.zoomed = false
+                }, completion: { e in
+                    UIView.animateWithDuration(0.3, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState], animations: {
+                        self.square.backgroundColor = UIColor.blueColor()
+                        }, completion: nil
+                    )
+                }
+            )
+        } else {
+            UIView.animateWithDuration(0.3, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState], animations: {
+                let scaleTransform = CGAffineTransformMakeScale(30, 30)
+                self.square.transform = scaleTransform
+                self.zoomed = true
+                }, completion: { e in
+                    UIView.animateWithDuration(0.3, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState], animations: {
+                        self.square.backgroundColor = UIColor.yellowColor()
+                        }, completion: nil
+                    )
+                }
+            )
+        }
     }
-
-
 }
-
